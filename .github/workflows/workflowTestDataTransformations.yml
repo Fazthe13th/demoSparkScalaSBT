@@ -51,8 +51,8 @@ jobs:
           name: test-results
           path: target/test-reports/
 
-      # Upload dependency graph for Dependabot
-      - name: Upload Dependency Graph
-        uses: scalacenter/sbt-dependency-submission@v2
-        with:
-          token: ${{ secrets.GH_TOKEN }}
+#      # Upload dependency graph for Dependabot
+#      - name: Upload Dependency Graph
+#        uses: scalacenter/sbt-dependency-submission@v2
+#        with:
+#          token: ${{ secrets.GH_TOKEN }}
