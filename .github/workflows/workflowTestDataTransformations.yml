@@ -54,3 +54,5 @@ jobs:
       # Upload dependency graph for Dependabot
       - name: Upload Dependency Graph
         uses: scalacenter/sbt-dependency-submission@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
