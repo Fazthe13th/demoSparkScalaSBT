@@ -1,0 +1,6 @@
+src/main/resources/application.conf
+lib/*.jar
+.bsp
+.idea
+target
+project/target
