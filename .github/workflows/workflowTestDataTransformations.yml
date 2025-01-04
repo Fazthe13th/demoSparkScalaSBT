@@ -19,7 +19,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Set up JDK 8 instead of JDK 11
+      # Set up JDK 8 for Spark 3.2.3 compatibility
       - name: Set up JDK 8
         uses: actions/setup-java@v4
         with:
@@ -27,11 +27,23 @@ jobs:
           distribution: 'temurin'
           cache: 'sbt'
 
-      # Run the build and tests using sbt
+      # ✅ Install sbt version 1.9.4 (your version)
+      - name: Install sbt 1.9.4
+        run: |
+          curl -L https://github.com/sbt/sbt/releases/download/v1.9.4/sbt-1.9.4.tgz | tar xz
+          echo "$PWD/sbt/bin" >> $GITHUB_PATH
+
+      # ✅ Verify sbt and Scala versions
+      - name: Verify sbt and Scala Versions
+        run: |
+          sbt sbtVersion
+          sbt scalaVersion
+
+      # Run tests using sbt
       - name: Run Tests
         run: sbt clean test
 
-      # Upload test results (Optional for better reporting)
+      # Upload test results for reporting
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -39,6 +51,6 @@ jobs:
           name: test-results
           path: target/test-reports/
 
-      # Upload dependency graph for Dependabot (Optional)
+      # Upload dependency graph for Dependabot
       - name: Upload Dependency Graph
         uses: scalacenter/sbt-dependency-submission@v2
